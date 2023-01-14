@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.api
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle
+features: [annotation-api, app-name, data, data-mongodb, gradle, http-client, junit, kotlin, kotlin-application, kotlin-build, logback, micronaut-build, mongo-sync, netty-server, openapi, readme, serialization-bson, shade, swagger-ui, test-resources, yaml]

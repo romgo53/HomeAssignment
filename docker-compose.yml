@@ -1,0 +1,16 @@
+version: '2'
+services:
+  mongo_db:
+    image: mongo
+    environment:
+      -  MONGO_INITDB_ROOT_USERNAME=mongo
+      -  MONGO_INITDB_ROOT_PASSWORD=mongo
+      -  MONGO_INITDB_DATABASE=blog
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongodata:
