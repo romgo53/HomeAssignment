@@ -57,7 +57,7 @@ class ProductService(
             .toList()
     }
 
-    fun update(id: String, productRequest: ProductRequest) {
+    fun update(id: String, productRequest: ProductRequest): Product {
         val updateResult = getCollection().updateOne(
             Document("_id", ObjectId(id)),
             Document("\$set", productRequest.toProductEntity())
@@ -65,6 +65,7 @@ class ProductService(
         if (updateResult.modifiedCount == 0L) {
             throw HttpStatusException(HttpStatus.NOT_FOUND, "Product with id $id not found")
         }
+        return findById(id)
     }
 
     fun delete(id: String): Long {

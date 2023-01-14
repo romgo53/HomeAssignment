@@ -62,8 +62,8 @@ class ProductController(
         id: String,
         @Schema(description = "Product to update")
         productRequest: ProductRequest
-    ) {
-        productService.update(id, productRequest)
+    ): Product {
+        return productService.update(id, productRequest)
     }
 
     @Delete("/{id}")

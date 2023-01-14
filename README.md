@@ -38,6 +38,8 @@ npm i
 ```
 
 ### Run ▶️
+Before running the provider, make sure that the backend application is running.
+
 In the `infrastructure` directory run the following command:
 - To run the create method run:
 ```bash

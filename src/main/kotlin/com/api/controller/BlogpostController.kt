@@ -42,9 +42,9 @@ class BlogpostController(
 
     @Get("/filter")
     fun filterAll(
-        @Schema(description = "Field to search by", example="brand")
+        @Schema(description = "Field to search by", example="name")
         field: String,
-        @Schema(description = "Search pattern", example="Under Armour")
+        @Schema(description = "Search pattern", example="Blogpost name")
         value: String,
         @QueryValue("limit", defaultValue = "20")
         @Schema(defaultValue = "20")
