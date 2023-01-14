@@ -1,30 +1,44 @@
 package com.api.controller
 
+import com.api.constants.BlogpostConstants
 import com.api.dto.requests.BlogpostRequest
 import com.api.dto.requests.ProductRequest
 import com.api.dto.responses.BlogpostResponse
 import com.api.dto.responses.ProductResponse
 import com.api.models.Blogpost
 import com.api.service.BlogpostService
+import com.api.service.ProductService
 import io.micronaut.http.annotation.*
 import io.swagger.v3.oas.annotations.media.Schema
 import org.bson.BsonValue
 
 @Controller("/blogpost")
 class BlogpostController(
-    private val blogpostService: BlogpostService
+    private val blogpostService: BlogpostService,
+    private val productService: ProductService
 ) {
 
     @Get("/{id}")
+    @Schema(description = "Get a blogpost by id")
     fun getProduct(id: String): Blogpost {
         return blogpostService.findById(id);
     }
 
     @Post("/")
     fun create(
-        @Schema(description = "Blogpost to create",)
+        @Schema(description = "Blogpost to create", example = BlogpostConstants.CREATE_REQUEST_BODY)
         blogpostRequest: BlogpostRequest
     ): BlogpostResponse {
+        if (blogpostRequest.products.isNotEmpty()) {
+            blogpostRequest.products.forEach { product ->
+                try {
+                    productService.findById(product?.toHexString()!!)
+                } catch (e: Exception) {
+                    throw Exception("Product with id ${product?.toHexString()} does not exist")
+                }
+            }
+        }
+
         return BlogpostResponse(blogpostService.create(blogpostRequest), "Blogpost created successfully")
     }
 
@@ -59,7 +73,7 @@ class BlogpostController(
     @Patch("/{id}")
     fun update(
         id: String,
-        @Schema(description = "Product to update")
+        @Schema(description = "Product to update", example = BlogpostConstants.CREATE_REQUEST_BODY)
         blogpostRequest: BlogpostRequest
     ): Blogpost {
         return blogpostService.update(id, blogpostRequest)

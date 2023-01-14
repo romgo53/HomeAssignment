@@ -71,7 +71,12 @@ class BlogpostService(
             .toList()
     }
 
-
+    fun pullDeletedProduct(productId: String) {
+        getCollection().updateMany(
+            Filters.eq("productIds", ObjectId(productId)),
+            Document("\$pull", Document("productIds", ObjectId(productId)))
+        )
+    }
     fun update(id: String, blogpostRequest: BlogpostRequest): Blogpost {
 
         val updateResult = getCollection().updateOne(

@@ -3,6 +3,7 @@ package com.api.controller
 import com.api.dto.requests.ProductRequest
 import com.api.dto.responses.ProductResponse
 import com.api.models.Product
+import com.api.service.BlogpostService
 import com.api.service.ProductService
 import io.micronaut.data.annotation.Query
 import io.micronaut.http.annotation.*
@@ -13,7 +14,8 @@ import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @Controller("/product")
 class ProductController(
-    private val productService: ProductService
+    private val productService: ProductService,
+    private val blogpostService: BlogpostService
 ) {
 
     @Get("/{id}")
@@ -68,6 +70,7 @@ class ProductController(
 
     @Delete("/{id}")
     fun delete(id: String): ProductResponse {
+        blogpostService.pullDeletedProduct(id);
         return ProductResponse(id, "Product deleted successfully, delete count: " + productService.delete(id))
     }
 }
