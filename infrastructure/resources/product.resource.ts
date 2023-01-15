@@ -1,9 +1,9 @@
 import * as pulumi from "@pulumi/pulumi";
-import { ProductInputs } from "../types/products";
-import { ProductProvider } from "../providers/productProvider";
+import { ProductInputs } from "../types/products.types";
+import { ProductProvider } from "../providers/product.provider";
 
 
-export class Product extends pulumi.dynamic.Resource {
+export class ProductResource extends pulumi.dynamic.Resource {
     
     public readonly name!: pulumi.Output<string>;
 

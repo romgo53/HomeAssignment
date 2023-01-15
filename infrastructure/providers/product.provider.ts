@@ -1,6 +1,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import axios from "axios";
-import { ProductProviderOutputs, ProductProviderInputs, ProductRespose } from "../types/products";
+import { ProductProviderOutputs, ProductProviderInputs, ProductRespose } from "../types/products.types";
 
 export class ProductProvider implements pulumi.dynamic.ResourceProvider {
   async create(inputs: ProductProviderInputs): Promise<ProductProviderOutputs> {

@@ -1,7 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
-import { Product } from "./mock/product";
+import { ProductResource } from "./resources/product.resource";
 
-const product = new Product("product", {
+const product = new ProductResource("product", {
     name: "Product 1",
     brand: "Brand 1",
     price: "100",
