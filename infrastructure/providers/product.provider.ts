@@ -1,15 +1,23 @@
 import * as pulumi from "@pulumi/pulumi";
 import axios from "axios";
-import { ProductProviderOutputs, ProductProviderInputs, ProductRespose } from "../types/products.types";
+import {
+  ProductProviderOutputs,
+  ProductProviderInputs,
+  ProductRespose,
+} from "../types/products.types";
 
 export class ProductProvider implements pulumi.dynamic.ResourceProvider {
   async create(inputs: ProductProviderInputs): Promise<ProductProviderOutputs> {
-    const result = await axios.post<ProductRespose>(`${inputs.endpoint}/product`, inputs, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+    const result = await axios.post<ProductRespose>(
+      `${inputs.endpoint}/product`,
+      inputs,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (result.status !== 200) {
       throw new Error(`Error ${result.status}`);
     }
@@ -18,7 +26,7 @@ export class ProductProvider implements pulumi.dynamic.ResourceProvider {
       id,
       outs: {
         ...inputs,
-        endpoint: inputs.endpoint
+        endpoint: inputs.endpoint,
       },
     };
   }

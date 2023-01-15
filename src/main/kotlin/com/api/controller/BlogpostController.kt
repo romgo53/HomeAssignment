@@ -29,16 +29,7 @@ class BlogpostController(
         @Schema(description = "Blogpost to create", example = BlogpostConstants.CREATE_REQUEST_BODY)
         blogpostRequest: BlogpostRequest
     ): BlogpostResponse {
-        if (blogpostRequest.products.isNotEmpty()) {
-            blogpostRequest.products.forEach { product ->
-                try {
-                    productService.findById(product?.toHexString()!!)
-                } catch (e: Exception) {
-                    throw Exception("Product with id ${product?.toHexString()} does not exist")
-                }
-            }
-        }
-
+        if (blogpostRequest.products.isNotEmpty()) productService.verifyProductsExists(blogpostRequest.products)
         return BlogpostResponse(blogpostService.create(blogpostRequest), "Blogpost created successfully")
     }
 
@@ -76,6 +67,7 @@ class BlogpostController(
         @Schema(description = "Product to update", example = BlogpostConstants.CREATE_REQUEST_BODY)
         blogpostRequest: BlogpostRequest
     ): Blogpost {
+        if (blogpostRequest.products.isNotEmpty()) productService.verifyProductsExists(blogpostRequest.products)
         return blogpostService.update(id, blogpostRequest)
     }
 

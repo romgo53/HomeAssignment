@@ -72,7 +72,15 @@ class ProductService(
         return getCollection().deleteOne(Document("_id", ObjectId(id))).deletedCount
     }
 
-
+    fun verifyProductsExists(product_ids: MutableList<ObjectId?> ) {
+        product_ids.forEach()  { product_id ->
+            try {
+                findById(product_id?.toHexString()!!)
+            } catch (e: Exception) {
+                throw HttpStatusException(HttpStatus.BAD_REQUEST, "Product with id ${product_id?.toHexString()!!} does not exist")
+            }
+        }
+    }
     private fun getCollection(): MongoCollection<Product> =
         mongoClient
             .getDatabase("blog")
